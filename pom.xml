@@ -12,7 +12,7 @@
 	<artifactId>taskManager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>taskManager</name>
-	<description>Simple Task manager api made in sprring</description>
+	<description>Simple Task manager api made in spring</description>
 	<url/>
 	<licenses>
 		<license/>
