@@ -45,7 +45,7 @@ public class TaskController {
         taskRepository.update(task, id);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("{id}")
     void deleteTask(@PathVariable int id) {
         taskRepository.delete(id);
     }

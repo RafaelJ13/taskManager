@@ -22,6 +22,7 @@ public class TaskRepository {
 
     void create(Task task) {
          tasks.add(task);
+
     }
 
     void update(Task task,Integer id) {
@@ -34,16 +35,6 @@ public class TaskRepository {
          tasks.removeIf(task -> task.id().equals(id));
     }
 
-    @PostConstruct
-    private void init() {
-        tasks.add(new Task(1,
-                        "Complete REST API",
-                        LocalDateTime.now(),
-                        true
-
-                )
-        );
-    }
 
 
 }

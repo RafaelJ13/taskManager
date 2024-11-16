@@ -22,12 +22,5 @@ public class Application {
 		log.info("Application started: http://localhost:8080/taskManager");
 		log.info("something changed!");
 	}
-	@Bean
-	CommandLineRunner runner() {
-		return args -> {
-			Task task = new Task(1,"Test Rest API", LocalDateTime.now(), false);
-            log.info("Task added:{}", task);
-		};
-	}
 
 }
