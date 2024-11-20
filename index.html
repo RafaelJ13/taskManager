@@ -6,32 +6,32 @@
   <title>Task Manager</title>
   <style>
         input[type="checkbox"] {
-        appearance: none; /* Remove o estilo padrão */
-        width: 24px; /* Aumente o tamanho para evitar cortes */
+        appearance: none;
+        width: 24px;
         height: 24px;
-        background-color: #f0f0f0; /* Cor de fundo padrão */
-        border: 2px solid #4c63af; /* Borda da checkbox */
-        border-radius: 5px; /* Arredondamento */
+        background-color: #f0f0f0;
+        border: 2px solid #4c63af;
+        border-radius: 5px;
         cursor: pointer;
         display: flex;
         align-items: center;
-        justify-content: center; /* Garante centralização do conteúdo */
+        justify-content: center;
         position: relative;
         }
 
         input[type="checkbox"]:checked {
-        background-color: #4c63af; /* Cor ao marcar */
+        background-color: #4c63af;
         border-color: #4c63af;
         }
 
         input[type="checkbox"]:checked::after {
-        content: '✔'; /* Símbolo de check */
+        content: '✔';
         color: white;
-        font-size: 16px; /* Ajusta o tamanho do símbolo */
+        font-size: 16px;
         position: absolute;
-        top: 50%; /* Centraliza verticalmente */
-        left: 50%; /* Centraliza horizontalmente */
-        transform: translate(-50%, -50%); /* Ajusta a posição central */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         }
 
     :root {
@@ -121,7 +121,7 @@
     }
 
 footer a {
-  color: var(--primary-color); /* GitHub link color */
+  color: var(--primary-color);
   text-decoration: none;
 }
 
@@ -171,7 +171,7 @@ footer img {
     .completed.task label{
         text-decoration: line-through;
     }
-    .task button { /* Remove a linha do botão */
+    .task button {
         background-color: #f44336;
         color: white;
         border: none;
@@ -243,10 +243,10 @@ footer img {
       }
     }
 
-    // Display tasks in the DOM
+
     function displayTasks(tasks) {
   const tasksContainer = document.getElementById('tasksContainer');
-  tasksContainer.innerHTML = ''; // Limpa as tarefas existentes
+  tasksContainer.innerHTML = '';
 
   tasks.forEach(task => {
     const taskDiv = document.createElement('div');
@@ -269,13 +269,13 @@ footer img {
   });
 }
 
-    // Add a new task with a random ID
+
     async function addTask(event) {
       event.preventDefault();
       const taskName = document.getElementById('taskName').value;
 
       const newTask = {
-        id: Math.floor(Math.random() * 10000), // Gerar um ID aleatório
+        id: Math.floor(Math.random() * 10000),
         name: taskName,
         createdAt: new Date().toISOString(),
         completed: false
@@ -289,14 +289,14 @@ footer img {
         });
 
         if (!response.ok) throw new Error('Failed to create task');
-        document.getElementById('taskName').value = ''; // Clear the input
-        fetchTasks(); // Refresh the task list
+        document.getElementById('taskName').value = '';
+        fetchTasks();
       } catch (error) {
         console.error('Error adding task:', error);
       }
     }
 
-    // Toggle task completion
+
     async function toggleTask(id, currentCompletedStatus) {
       try {
         const response = await fetch(`${apiUrl}${id}`);
@@ -318,7 +318,7 @@ footer img {
       }
     }
 
-    // Delete a task
+
     async function deleteTask(id) {
       try {
         const response = await fetch(`${apiUrl}${id}`, { method: 'DELETE' });
@@ -329,15 +329,15 @@ footer img {
       }
     }
 
-    // Toggle dark mode
+
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
     }
 
-    // Event listener for the task form
+
     document.getElementById('taskForm').addEventListener('submit', addTask);
 
-    // Initial fetch of tasks
+
     fetchTasks();
   </script>
 </body>
