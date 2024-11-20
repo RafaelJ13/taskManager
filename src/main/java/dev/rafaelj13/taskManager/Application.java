@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -23,14 +24,17 @@ public class Application {
 	}
 }
 @Configuration
-class CorsConfig implements WebMvcConfigurer {
-
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**") // Aplica para todas as rotas
-				.allowedOrigins("http://localhost:5500") // URL do seu frontend (ajuste conforme necessário)
-				.allowedMethods("GET", "POST", "PUT", "DELETE") // Permitir métodos HTTP
-				.allowedHeaders("*") // Permitir qualquer cabeçalho
-				.allowCredentials(true); // Permitir credenciais
+class CorsConfig {
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("*")
+						.allowedMethods("*")
+						.allowedHeaders("*");
+			}
+		};
 	}
 }

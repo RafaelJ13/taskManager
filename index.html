@@ -212,7 +212,7 @@ footer img {
 </head>
 <body>
   <button class="dark-mode-toggle" onclick="toggleDarkMode()">
-    <img id="modeIcon" src="image.png" width="25px" height="auto" alt="Switch to Dark Mode" />
+    <img id="modeIcon" src="frontend/image.png" width="25px" height="auto" alt="Switch to Dark Mode" />
 </button>
   <h1>Task Manager</h1>
   <h2>Create a New Task</h2>
@@ -229,7 +229,7 @@ footer img {
   </footer>
   
   <script>
-    const apiUrl = 'http://localhost:8080/taskmanager/api/';
+    const apiUrl = 'https://taskmanager-q8zg.onrender.com/taskmanager/api/';
 
     // Fetch and display tasks
     async function fetchTasks() {
