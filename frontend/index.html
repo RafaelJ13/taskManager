@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <style>
+        input[type="checkbox"] {
+        appearance: none; /* Remove o estilo padrão */
+        width: 24px; /* Aumente o tamanho para evitar cortes */
+        height: 24px;
+        background-color: #f0f0f0; /* Cor de fundo padrão */
+        border: 2px solid #4c63af; /* Borda da checkbox */
+        border-radius: 5px; /* Arredondamento */
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Garante centralização do conteúdo */
+        position: relative;
+        }
+
+        input[type="checkbox"]:checked {
+        background-color: #4c63af; /* Cor ao marcar */
+        border-color: #4c63af;
+        }
+
+        input[type="checkbox"]:checked::after {
+        content: '✔'; /* Símbolo de check */
+        color: white;
+        font-size: 16px; /* Ajusta o tamanho do símbolo */
+        position: absolute;
+        top: 50%; /* Centraliza verticalmente */
+        left: 50%; /* Centraliza horizontalmente */
+        transform: translate(-50%, -50%); /* Ajusta a posição central */
+        }
+
+    :root {
+      --primary-color: #4c63af;
+      --secondary-color: #45a049;
+      --danger-color: #f44336;
+      --text-color: #333;
+      --bg-color: #f9f9f9;
+      --task-bg-color: #fff;
+      --completed-color: #999;
+      --border-color: #ddd;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Dark mode variables */
+    body.dark-mode {
+      --primary-color: #748bff;
+      --secondary-color: #77c977;
+      --danger-color: #ff6b6b;
+      --text-color: #eee;
+      --bg-color: #121212;
+      --task-bg-color: #1e1e1e;
+      --completed-color: #555;
+      --border-color: #333;
+      --shadow-color: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1, h2 {
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    #taskForm {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    #taskForm input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: var(--task-bg-color);
+      color: var(--text-color);
+    }
+
+    #taskForm button {
+      padding: 10px 20px;
+      border: none;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #taskForm button:hover {
+      background-color: var(--secondary-color);
+    }
+    footer {
+        background-color: var(--bg-color);
+        color: var(--primary-color);
+        text-align: center;
+        padding: 20px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+footer a {
+  color: var(--primary-color); /* GitHub link color */
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+footer img {
+    border-radius: 100%;
+  margin-bottom: -5px;
+}
+
+    #tasksContainer {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .task {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--border-color);
+      background-color: var(--task-bg-color);
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px var(--shadow-color);
+    }
+
+    .task label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .task input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .completed {
+      color: var(--completed-color);
+    }
+    .completed.task label{
+        text-decoration: line-through;
+    }
+    .task button { /* Remove a linha do botão */
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .task button:hover {
+        background-color: #d32f2f;
+    }
+
+
+    .dark-mode-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      background-color: var(--task-bg-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    @media (max-width: 600px) {
+      #taskForm, #tasksContainer {
+        width: 90%;
+      }
+
+      .task {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+    <img id="modeIcon" src="image.png" width="25px" height="auto" alt="Switch to Dark Mode" />
+</button>
+  <h1>Task Manager</h1>
+  <h2>Create a New Task</h2>
+  <form id="taskForm">
+    <input type="text" id="taskName" placeholder="Task Name" required>
+    <button type="submit">Add Task</button>
+  </form>
+  
+  <h2>Tasks</h2>
+  <div id="tasksContainer"></div>
+  <footer>
+    <p>Created by <a href="https://github.com/RafaelJ13" target="_blank" id="githubLink">
+      <img src="https://www.shutterstock.com/image-vector/cat-icon-flat-style-github-600nw-2215226473.jpg" alt="RafaelJ13" width="20" height="20"></a></p>
+  </footer>
+  
+  <script>
+    const apiUrl = 'http://localhost:8080/taskmanager/api/';
+
+    // Fetch and display tasks
+    async function fetchTasks() {
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error('Failed to fetch tasks');
+        const tasks = await response.json();
+        displayTasks(tasks);
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    }
+
+    // Display tasks in the DOM
+    function displayTasks(tasks) {
+  const tasksContainer = document.getElementById('tasksContainer');
+  tasksContainer.innerHTML = ''; // Limpa as tarefas existentes
+
+  tasks.forEach(task => {
+    const taskDiv = document.createElement('div');
+    taskDiv.className = 'task';
+    if (task.completed) taskDiv.classList.add('completed');
+
+    taskDiv.innerHTML = `
+      <label style="flex: 1;">
+        <input 
+          type="checkbox" 
+          ${task.completed ? 'checked' : ''} 
+          onchange="toggleTask(${task.id}, ${task.completed})"
+        >
+        ${task.name} (Created at: ${new Date(task.createdAt).toLocaleString()})
+      </label>
+      ${task.completed ? `<button onclick="deleteTask(${task.id})">Delete</button>` : ''}
+    `;
+
+    tasksContainer.appendChild(taskDiv);
+  });
+}
+
+    // Add a new task with a random ID
+    async function addTask(event) {
+      event.preventDefault();
+      const taskName = document.getElementById('taskName').value;
+
+      const newTask = {
+        id: Math.floor(Math.random() * 10000), // Gerar um ID aleatório
+        name: taskName,
+        createdAt: new Date().toISOString(),
+        completed: false
+      };
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newTask)
+        });
+
+        if (!response.ok) throw new Error('Failed to create task');
+        document.getElementById('taskName').value = ''; // Clear the input
+        fetchTasks(); // Refresh the task list
+      } catch (error) {
+        console.error('Error adding task:', error);
+      }
+    }
+
+    // Toggle task completion
+    async function toggleTask(id, currentCompletedStatus) {
+      try {
+        const response = await fetch(`${apiUrl}${id}`);
+        if (!response.ok) throw new Error('Failed to fetch the task');
+        const task = await response.json();
+
+        task.completed = !currentCompletedStatus;
+
+        const updateResponse = await fetch(`${apiUrl}${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(task),
+        });
+
+        if (!updateResponse.ok) throw new Error('Failed to update task');
+        fetchTasks();
+      } catch (error) {
+        console.error('Error toggling task:', error);
+      }
+    }
+
+    // Delete a task
+    async function deleteTask(id) {
+      try {
+        const response = await fetch(`${apiUrl}${id}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error('Failed to delete task');
+        fetchTasks();
+      } catch (error) {
+        console.error('Error deleting task:', error);
+      }
+    }
+
+    // Toggle dark mode
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    // Event listener for the task form
+    document.getElementById('taskForm').addEventListener('submit', addTask);
+
+    // Initial fetch of tasks
+    fetchTasks();
+  </script>
+</body>
+</html>

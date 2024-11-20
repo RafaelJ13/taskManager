@@ -11,9 +11,6 @@ public record Task(
         boolean completed
 ) {
         public Task {
-                if (id == null) {
-                        id = 999;
-                }
                 createdAt = LocalDateTime.now();
 
         }
