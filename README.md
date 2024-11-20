@@ -5,7 +5,7 @@
 	<em><code>❯ A Simple Task Manager made with Spring</code></em>
 </p>
 <p align="left">
-	<img src="https://img.shields.io/github/license/RafaelJ13/taskManager?style=for-the-badge&logo=opensourceinitiative&logoColor=white&color=3661b7" alt="license">
+	<img src="https://img.shields.io/badge/licence-mit-white?style=for-the-badge&logo=opensourceinitiative&logocolor=white&color=3661b7" alt="license">
 	<img src="https://img.shields.io/github/last-commit/RafaelJ13/taskManager?style=for-the-badge&logo=git&logoColor=white&color=3661b7" alt="last-commit">
 	<img src="https://img.shields.io/github/languages/top/RafaelJ13/taskManager?style=for-the-badge&color=3661b7" alt="repo-top-language">
 	<img src="https://img.shields.io/github/languages/count/RafaelJ13/taskManager?style=for-the-badge&color=3661b7" alt="repo-language-count">
